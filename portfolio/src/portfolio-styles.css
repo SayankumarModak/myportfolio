@@ -1,0 +1,355 @@
+/* Enhanced Portfolio Styles - Add this to your CSS file */
+
+/* Global animations and effects */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Background enhancements */
+body {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Main container enhancements */
+article {
+  animation: fadeInUp 0.8s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+/* Section spacing and effects */
+section {
+  margin-bottom: 6rem;
+  padding: 2rem 0;
+  position: relative;
+}
+
+/* Card-like containers */
+.card-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.card-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(147, 51, 234, 0.2);
+  border-color: rgba(147, 51, 234, 0.3);
+}
+
+/* Headings enhancements */
+h1, h2, h3 {
+  background: linear-gradient(135deg, #ffffff, #e2e8f0, #cbd5e1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+  animation: float 3s ease-in-out infinite;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #9333ea, #ec4899, #3b82f6);
+  background-size: 300% 100%;
+  margin: 1rem auto;
+  border-radius: 2px;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Text enhancements */
+p {
+  color: #e2e8f0;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Special text effects */
+.highlight-text {
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+/* Timeline enhancements */
+.timeline-item {
+  position: relative;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  margin: 1rem 0;
+  transition: all 0.4s ease;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.timeline-item:hover {
+  transform: translateX(10px);
+  background: rgba(147, 51, 234, 0.1);
+  border-color: rgba(147, 51, 234, 0.3);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.6);
+}
+
+/* Skills section enhancements */
+.skill-item {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.skill-item:hover {
+  transform: scale(1.05);
+  background: rgba(147, 51, 234, 0.1);
+  animation: pulse-glow 2s infinite;
+}
+
+/* Portfolio/Apps grid enhancements */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.portfolio-item {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.portfolio-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.portfolio-item:hover::before {
+  left: 100%;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(147, 51, 234, 0.25);
+  border-color: rgba(147, 51, 234, 0.4);
+}
+
+/* Button enhancements */
+button, .button {
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover, .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(147, 51, 234, 0.6);
+}
+
+button::before, .button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+button:hover::before, .button:hover::before {
+  left: 100%;
+}
+
+/* Contact form enhancements */
+input, textarea {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1rem;
+  color: #e2e8f0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(147, 51, 234, 0.5);
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  background: rgba(147, 51, 234, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+  .card-container {
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+  }
+  
+  h1 {
+    font-size: 3rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .timeline-item:hover {
+    transform: none;
+  }
+  
+  .portfolio-item {
+    padding: 1.5rem;
+  }
+}
+
+/* Scroll animations */
+@media (prefers-reduced-motion: no-preference) {
+  [data-animate="true"] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+  }
+  
+  [data-animate="true"].in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading states */
+.loading {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(147, 51, 234, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  animation: gradient-shift 1.5s infinite;
+}
+
+/* Utility classes */
+.text-gradient {
+  background: linear-gradient(135deg, #9333ea, #ec4899, #3b82f6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-effect {
+  box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 50px rgba(147, 51, 234, 0.6);
+}
