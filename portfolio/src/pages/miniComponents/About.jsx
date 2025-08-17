@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dp from "../../assets/DP_Modak.jpg"
 
 const About = () => {
   return (
@@ -25,7 +26,7 @@ const About = () => {
         <div className="grid md:grid-cols-2 my-8 sm:my-20 gap-14">
           <div className="flex justify-center items-center">
             <img
-              src="../../../public/DP_Modak.jpg"
+              src={dp}
               alt="avatar"
               className="bg-white p-2 sm:p-4 rotate-[10deg] h-[240px] sm:h-[340px] md:h-[350px] lg:h-[450px]"
             />

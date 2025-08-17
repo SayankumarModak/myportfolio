@@ -19,7 +19,7 @@ const Hero = () => {
   useEffect(() => {
     const getMyProfile = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/user/portfolio/me",
+        "https://sayanportfolio.onrender.com/api/v1/user/portfolio/me",
         { withCredentials: true }
       );
       setUser(data.user);
@@ -48,8 +48,8 @@ const Hero = () => {
             "MERN Developer",
             "FrontEnd Developer",
             "Backend Developer",
+            "Problem solver",
             "Coder",
-            "Machine Learning Enthusiast",
           ]}
           loop={50}
           cursor

@@ -26,7 +26,11 @@ import AddProject from "./sub-components/AddProject";
 import AddSoftwareApplications from "./sub-components/AddSoftwareApplications";
 import Account from "./sub-components/Account";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAllUserErrors, logout } from "@/store/slices/userSlice";
+import {
+  clearAllUserErrors,
+  logout,
+  resetTokenCredentials,
+} from "@/store/slices/userSlice";
 import { toast } from "react-toastify";
 import Messages from "./sub-components/Messages";
 import AddTimeline from "./sub-components/AddTimeline";
@@ -36,7 +40,7 @@ const HomePage = () => {
   const { isAuthenticated, error, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(resetTokenCredentials());
     toast.success("Logged Out!");
   };
   const navigateTo = useNavigate();

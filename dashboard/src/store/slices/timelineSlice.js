@@ -8,6 +8,7 @@ const timelineSlice = createSlice({
     timeline: [],
     error: null,
     message: null,
+    token: null
   },
   reducers: {
     getAllTimelineRequest(state, action) {
@@ -87,6 +88,7 @@ export const getAllTimeline = () => async (dispatch) => {
 };
 
 export const addNewTimeline = (data) => async (dispatch) => {
+  const token = JSON.parse(sessionStorage.getItem('token'))
   dispatch(timelineSlice.actions.addNewTimelineRequest());
   try {
     const response = await axios.post(
@@ -94,7 +96,10 @@ export const addNewTimeline = (data) => async (dispatch) => {
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
       }
     );
     dispatch(
@@ -110,10 +115,14 @@ export const addNewTimeline = (data) => async (dispatch) => {
 export const deleteTimeline = (id) => async (dispatch) => {
   dispatch(timelineSlice.actions.deleteTimelineRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.delete(
       `http://localhost:4000/api/v1/timeline/delete/${id}`,
       {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
     );
     dispatch(

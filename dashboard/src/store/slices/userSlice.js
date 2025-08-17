@@ -10,8 +10,16 @@ const userSlice = createSlice({
     error: null,
     message: null,
     isUpdated: false,
+    token: null
   },
   reducers: {
+    resetTokenCredentials: (state, action) => {
+      sessionStorage.clear()
+      state.isAuthenticated = false;
+      state.user = {};
+      state.token = null
+      state.isUpdated = false
+    },
     loginRequest(state, action) {
       state.loading = true;
       state.isAuthenticated = false;
@@ -19,16 +27,20 @@ const userSlice = createSlice({
       state.error = null;
     },
     loginSuccess(state, action) {
+      console.log("the action payload is", action.payload.token);
       state.loading = false;
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
       state.error = null;
+      state.token = action.payload.token
+      sessionStorage.setItem('token', JSON.stringify(action.payload.token))
     },
     loginFailed(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
       state.error = action.payload;
+      state.token = null;
     },
     logoutSuccess(state, action) {
       state.loading = false;
@@ -36,6 +48,8 @@ const userSlice = createSlice({
       state.user = {};
       state.error = null;
       state.message = action.payload;
+      state.token = null
+      sessionStorage.clear()
     },
     logoutFailed(state, action) {
       state.loading = false;
@@ -109,6 +123,8 @@ const userSlice = createSlice({
   },
 });
 
+
+
 export const login = (email, password) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
@@ -117,18 +133,23 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
-    dispatch(userSlice.actions.loginSuccess(data.user));
+    dispatch(userSlice.actions.loginSuccess(data));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(userSlice.actions.loginFailed(error.response.data.message));
   }
 };
 
-export const getUser = () => async (dispatch) => {
+export const getUser = () => async (dispatch,) => {
   dispatch(userSlice.actions.loadUserRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
+    console.log("the token in the header is ", token)
     const { data } = await axios.get("http://localhost:4000/api/v1/user/me", {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
     dispatch(userSlice.actions.loadUserSuccess(data.user));
     dispatch(userSlice.actions.clearAllErrors());
@@ -154,12 +175,13 @@ export const updatePassword =
   (currentPassword, newPassword, confirmNewPassword) => async (dispatch) => {
     dispatch(userSlice.actions.updatePasswordRequest());
     try {
+      const token = JSON.parse(sessionStorage.getItem('token'))
       const { data } = await axios.put(
         "http://localhost:4000/api/v1/user/password/update",
         { currentPassword, newPassword, confirmNewPassword },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: { Authorization: `bearer ${token}`, "Content-Type": "application/json" },
         }
       );
       dispatch(userSlice.actions.updatePasswordSuccess(data.message));
@@ -174,12 +196,14 @@ export const updatePassword =
 export const updateProfile = (data) => async (dispatch) => {
   dispatch(userSlice.actions.updateProfileRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.put(
       "http://localhost:4000/api/v1/user/me/profile/update",
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+
       }
     );
     dispatch(userSlice.actions.updateProfileSuccess(response.data.message));
@@ -197,4 +221,6 @@ export const clearAllUserErrors = () => (dispatch) => {
   dispatch(userSlice.actions.clearAllErrors());
 };
 
+
+export const { resetTokenCredentials } = userSlice.actions;
 export default userSlice.reducer;

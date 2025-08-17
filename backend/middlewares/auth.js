@@ -4,11 +4,16 @@ import ErrorHandler from "./error.js";
 import jwt from "jsonwebtoken";
 
 export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
-  const { token } = req.cookies;
+
+  const authHeader = req.headers['authorization'];
+  console.log("the x is ", authHeader);
+  const token = authHeader && authHeader.split(' ')[1]
+  console.log("the token in the backend is", token)
   if (!token) {
     return next(new ErrorHandler("User not Authenticated!", 400));
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
   req.user = await User.findById(decoded.id);
   next();
+
 });

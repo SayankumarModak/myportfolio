@@ -88,6 +88,8 @@ export const login = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Invalid Email Or Password", 401));
   }
 
+  
+
   generateToken(user, "Login Successfully!", 200, res);
 });
 

@@ -102,12 +102,16 @@ export const getAllSkills = () => async (dispatch) => {
 export const addNewSkill = (data) => async (dispatch) => {
   dispatch(skillSlice.actions.addNewSkillRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.post(
       "http://localhost:4000/api/v1/skill/add",
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        },
       }
     );
     console.log(response);
@@ -122,12 +126,16 @@ export const addNewSkill = (data) => async (dispatch) => {
 export const updateSkill = (id, proficiency) => async (dispatch) => {
   dispatch(skillSlice.actions.updateSkillRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.put(
       `http://localhost:4000/api/v1/skill/update${id}`,
       { proficiency },
       {
         withCredentials: true,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
       }
     );
     dispatch(skillSlice.actions.updateSkillSuccess(response.data.message));
@@ -140,10 +148,14 @@ export const updateSkill = (id, proficiency) => async (dispatch) => {
 export const deleteSkill = (id) => async (dispatch) => {
   dispatch(skillSlice.actions.deleteSkillRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.delete(
       `http://localhost:4000/api/v1/skill/delete/${id}`,
       {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
     );
     dispatch(skillSlice.actions.deleteSkillSuccess(response.data.message));

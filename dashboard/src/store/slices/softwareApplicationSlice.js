@@ -97,12 +97,16 @@ export const addNewSoftwareApplication = (data) => async (dispatch) => {
     softwareApplicationSlice.actions.addNewsoftwareApplicationsRequest()
   );
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.post(
       "http://localhost:4000/api/v1/softwareApplication/add",
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        },
       }
     );
     dispatch(
@@ -125,10 +129,14 @@ export const deleteSoftwareApplication = (id) => async (dispatch) => {
     softwareApplicationSlice.actions.deletesoftwareApplicationsRequest()
   );
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.delete(
       `http://localhost:4000/api/v1/softwareApplication/delete/${id}`,
       {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
     );
     dispatch(

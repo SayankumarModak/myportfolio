@@ -105,12 +105,16 @@ export const getAllProjects = () => async (dispatch) => {
 export const addNewProject = (data) => async (dispatch) => {
   dispatch(projectSlice.actions.addNewProjectRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.post(
       "http://localhost:4000/api/v1/project/add",
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        },
       }
     );
     dispatch(projectSlice.actions.addNewProjectSuccess(response.data.message));
@@ -124,10 +128,14 @@ export const addNewProject = (data) => async (dispatch) => {
 export const deleteProject = (id) => async (dispatch) => {
   dispatch(projectSlice.actions.deleteProjectRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.delete(
       `http://localhost:4000/api/v1/project/delete/${id}`,
       {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
     );
     dispatch(projectSlice.actions.deleteProjectSuccess(response.data.message));
@@ -141,12 +149,16 @@ export const deleteProject = (id) => async (dispatch) => {
 export const updateProject = (id, newData) => async (dispatch) => {
   dispatch(projectSlice.actions.updateProjectRequest());
   try {
+    const token = JSON.parse(sessionStorage.getItem('token'))
     const response = await axios.put(
       `http://localhost:4000/api/v1/project/update/${id}`,
       newData,
       {
         withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        },
       }
     );
     dispatch(projectSlice.actions.updateProjectSuccess(response.data.message));
